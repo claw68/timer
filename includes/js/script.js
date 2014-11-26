@@ -29,3 +29,12 @@ function Timer(options) {
 function format(n) {
 	return (n < 10 ? "0" : "") + n;
 }
+
+var counter = new Timer({
+	seconds: 5,
+	onUpdateStatus: function(sec){
+		$("#second").html(format(sec));
+	}
+});
+
+counter.start();
