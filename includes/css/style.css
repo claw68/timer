@@ -7,3 +7,31 @@
     line-height: 0;
     visibility: hidden;
 }
+
+body {
+	background: url("../images/bg.jpg") repeat scroll 0 0 #000000;
+}
+
+.wrapper {
+	width: 960px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#timer {
+	font-size: 380px;
+	padding-top: 100px;
+	color: #FFFFFF;
+}
+
+#minute {
+	float: left;
+}
+
+#separator {
+	float: left;
+}
+
+#second {
+	float: left;
+}
