@@ -3,6 +3,7 @@ function Timer(options) {
 	instance = this,
 	seconds = options.seconds || 10,
 	minutes = options.minutes || 0,
+	isPaused = false,
 	updateStatus = options.onUpdateStatus || function () {},
 	counterEnd = options.onCounterEnd || function () {};
 	
@@ -17,7 +18,8 @@ function Timer(options) {
 				instance.stop();
 			}
 		}
-		seconds--;
+		if (!isPaused)
+			seconds--;
 	}
 	
 	this.start = function () {
@@ -30,6 +32,10 @@ function Timer(options) {
 	
 	this.stop = function () {
 		clearInterval(timer);
+	};
+	
+	this.pause = function () {
+		isPaused = !isPaused;
 	};
 }
 
