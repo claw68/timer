@@ -2,14 +2,20 @@ function Timer(options) {
 	var timer,
 	instance = this,
 	seconds = options.seconds || 10,
+	minutes = options.minutes || 0,
 	updateStatus = options.onUpdateStatus || function () {},
 	counterEnd = options.onCounterEnd || function () {};
 	
 	function decrementCounter() {
-		updateStatus(seconds);
+		updateStatus(minutes, seconds);
 		if (seconds === 0) {
-			counterEnd();
-			instance.stop();
+			if (minutes > 0) {
+				minutes--;
+				seconds = 60;
+			} else {
+				counterEnd();
+				instance.stop();
+			}
 		}
 		seconds--;
 	}
@@ -17,6 +23,7 @@ function Timer(options) {
 	this.start = function () {
 		clearInterval(timer);
 		timer = 0;
+		minutes = options.minutes;
 		seconds = options.seconds;
 		timer = setInterval(decrementCounter, 1000);
 	};
@@ -31,8 +38,10 @@ function format(n) {
 }
 
 var counter = new Timer({
-	seconds: 5,
-	onUpdateStatus: function(sec){
+	minutes: 3,
+	seconds: 0,
+	onUpdateStatus: function(min, sec){
+		$("#minute").html(format(min));
 		$("#second").html(format(sec));
 	}
 });
