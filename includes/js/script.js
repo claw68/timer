@@ -45,7 +45,7 @@ function format(n) {
 
 function yellow() {
 	var interval = setInterval(function() {
-		$("body").css('background', 'yellow');
+		$("body").css('background', '#e5e500');
 		setTimeout("$('body').css('background', '')", 500);
 	}, 1000);
 	return interval;
