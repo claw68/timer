@@ -59,6 +59,8 @@ function red() {
 	return interval;
 }
 
+var yellowFlag;
+
 var counter = new Timer({
 	minutes: 3,
 	seconds: 0,
@@ -70,11 +72,11 @@ var counter = new Timer({
 		var redwarning = 1*60 + 0; 
 		
 		if(secondsleft == yellowwarning) {
-			yellow();
+			yellowFlag = yellow();
 		}
 		
 		if(secondsleft == redwarning) {
-			clearInterval(yellow());
+			clearInterval(yellowFlag);
 			red();
 		}
 		
