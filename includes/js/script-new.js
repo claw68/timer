@@ -3,6 +3,10 @@ function Timer(options) {
 	instance = this,
 	seconds = options.seconds || 10,
 	minutes = options.minutes || 0,
+	yellowTime = options.yellowTime || 120,
+	redTime = options.redTime || 60,
+	yellow = 0,
+	red = 0,
 	isPaused = false,
 	updateStatus = options.onUpdateStatus || function () {},
 	counterEnd = options.onCounterEnd || function () {};
@@ -18,8 +22,37 @@ function Timer(options) {
 				instance.stop();
 			}
 		}
+		
+		if((minutes*60 + seconds) < yellowTime) {
+			if(yellow === 0) {
+				yellowbkg();
+			console.log('yellow!');
+			console.log(yellow);
+			}
+			
+		} else if((minutes*60 + seconds) < redTime) {
+			if(yellow !== 0)
+				clearInterval(yellow);
+			if(!red)
+				redbkg();
+		}
+		
 		if (!isPaused)
 			seconds--;
+	}
+	
+	function redbkg() {
+		var red = setInterval(function() {
+		$("body").css('background', 'red');
+			setTimeout("$('body').css('background', '')", 500);
+		}, 1000);
+	}
+	
+	function yellowbkg() {
+		var yellow = setInterval(function() {
+		$("body").css('background', '#e5e500');
+			setTimeout("$('body').css('background', '')", 500);
+		}, 1000);
 	}
 	
 	this.start = function () {
@@ -27,7 +60,7 @@ function Timer(options) {
 		timer = 0;
 		minutes = options.minutes;
 		seconds = options.seconds;
-		timer = setInterval(decrementCounter, 1000);
+		timer = setInterval(decrementCounter, 100);
 	};
 	
 	this.stop = function () {
@@ -43,41 +76,10 @@ function format(n) {
 	return (n < 10 ? "0" : "") + n;
 }
 
-function yellow() {
-	var interval = setInterval(function() {
-		$("body").css('background', '#e5e500');
-		setTimeout("$('body').css('background', '')", 500);
-	}, 1000);
-	return interval;
-}
-
-function red() {
-	var interval = setInterval(function() {
-		$("body").css('background', 'red');
-		setTimeout("$('body').css('background', '')", 500);
-	}, 1000);
-	return interval;
-}
-
 var counter = new Timer({
 	minutes: 3,
 	seconds: 0,
 	onUpdateStatus: function(min, sec){
-		
-		var secondsleft = min*60 + sec;
-		
-		var yellowwarning = 2*60 + 0;
-		var redwarning = 1*60 + 0; 
-		
-		if(secondsleft == yellowwarning) {
-			yellow();
-		}
-		
-		if(secondsleft == redwarning) {
-			clearInterval(yellow());
-			red();
-		}
-		
 		$("#minute").html(format(min));
 		$("#second").html(format(sec));
 	}
