@@ -62,7 +62,7 @@ function red() {
 var yellowFlag;
 
 var counter = new Timer({
-	minutes: 3,
+	minutes: 15,
 	seconds: 0,
 	onUpdateStatus: function(min, sec){
 		
